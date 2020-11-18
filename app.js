@@ -12,20 +12,31 @@ const articleSchema = new mongoose.Schema({
 
 const Article = new mongoose.model("Article", articleSchema)
 
-app.get('/', (req, res) => {
-  const article = new Article({
-    title: "title test", 
-    content: "content test"
-  });
-  article.save((err) => {
+// app.get('/', (req, res) => {
+//   const article = new Article({
+//     title: "title test", 
+//     content: "content test"
+//   });
+//   article.save((err) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     else{
+//       res.send("saved the article");
+//     }
+//   });
+// });
+
+app.get("/articles", (req, res) => {
+  Article.find((err, docs) => {
     if (err) {
       console.log(err);
     }
-    else{
-      res.send("saved the article");
+    else {
+      res.send(docs);
     }
-  });
-});
+  })
+})
 
 app.listen(3000, () => {
   console.log("running on port 3000");
